@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:34:52 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/14 11:46:38 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/16 10:28:15 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int ft_printf(const char *str, ...)
 				if_there_is_flags++;
 				i++;
 			}
-			if (ft_
+			if (ft_strchr(type, str[i])_
 		}
 	}
 }
