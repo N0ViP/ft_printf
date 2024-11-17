@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:34:52 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/16 10:28:15 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/16 21:52:07 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,37 @@ char	*ft_strchr(const char *str, char c)
 	return (NULL);
 }
 
+void	ft_select_type(va_list args, char c, int flags, int *count)
+{
+	if (c == 'c')
+		ft_putchar(ar
+}
+
 int ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		i;
-	int		if_there_is_flags;
-	char	*flags;
-	char	*type;
+	int		flags;
+	int		count;
 
 	i = 0;
 	if_there_is_flags = 0;
-	flags = "-0# +";
-	type = "cspdiuxX%";
 	va_start(args, str);
 	while (str[i])
 	{
 		if (str[i] == 37)
 		{
 			i++;
-			while (ft_strchr(flags, str[i]))
+			while (ft_strchr("-0# +", str[i]))
 			{
-				if_there_is_flags++;
+				flags++;
 				i++;
 			}
-			if (ft_strchr(type, str[i])_
+			if (ft_strchr("cspdiuxX%", str[i]))
+			{
+				ft_select_type(args, str[i], flags, &count);
+				i++;
+			}
 		}
 	}
 }
