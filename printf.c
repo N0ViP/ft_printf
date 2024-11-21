@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/21 01:47:50 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/21 23:55:53 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_select_type(char c, va_list args, t_flags *flags)
 	return (count);
 }
 
-int get_flags(t_flags *flags, char *str)
+int get_flags(t_flags *flags, char *str, int i)
 {
 	while (ft_strchr("#0- +", str[i]))
 	{
@@ -66,9 +66,15 @@ int get_flags(t_flags *flags, char *str)
 			flags->alternate_form = 1;
 		i++;
 	}
-	l_z_len = ft_atoi(str + i);
+	flags->l_z_len = ft_atoi(str + i);
 	i += ft_num_len(flags->l_z_len);
-	flags->percision = (str[i] == '.') * ft_atoi(str[++i]);
+	flags->percision = 0;
+	if (str[i] == '.')
+	{
+		flags->percision = ft_atoi(str + i);
+		if (flags->percision == 0)
+			flags->percision = -1;
+	}
 	i += ft_num_len(flags->per_len);
 	return (i);
 }
@@ -76,10 +82,12 @@ int get_flags(t_flags *flags, char *str)
 char *ft_check_flags(char *str, t_flags **flags)
 {
 	int i;
+
+	i = 0;
 	*flags = (t_flags) malloc(t_flags);
 	if (!(*flags))
 		return (NULL);
-	i = get_flags(*flags, str);
+	i = get_flags(*flags, str, i);
 	return (str + i);
 }
 
