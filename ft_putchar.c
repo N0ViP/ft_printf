@@ -5,30 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 06:05:43 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/19 09:18:34 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/21 00:51:59 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/21 01:47:45 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c, char *flags, int n_flags)
+void	ft_write_char(char *res, char c, t_flags *flags)
+{
+	int	i;
+
+	i = 0;
+	if (flags->left_justify)
+	{
+		res[i++] = c;
+		while (i < flags->l_z_len)
+			res[i++] = ' ';
+	}
+	else
+	{
+		flags->l_z_len--;
+		res[flags->l_z_len--] = c;
+		while (flags->l_z_len >= 0)
+			res[flags->l_z_len--] = ' ';
+	}
+}
+
+int	ft_putchar(char c, t_flags *flags)
 {
 	char	*res;
 	int		count;
-	int		i;
-	if (ft_strchr(flags, '-') == 0)
-		return (0);
-	res = (char *) malloc(n_flags);
-	if (!res)
-		return (0);
-	i = 0;
-	res[i++] = c;
-	while (i < n_flags)
+
+	count = 0;
+	if (!flags->l_z_len || flags->l_z_len == 1)
+		count = write(1, &c, 1);
+	else
 	{
-		res[i] = ' ';
-		i++
+		res = (char *) malloc(flags->l_z_len);
+		if (!res)
+			return (-1);
+		ft_write_char(res, c, flags);
+		count = write(1, res, flags->l_z_len);
 	}
-	count = write(1, res, n_flags);
-	return (free(res), count);
+	return (count);
 }

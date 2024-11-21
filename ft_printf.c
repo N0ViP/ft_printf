@@ -6,25 +6,25 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:34:52 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/19 04:25:26 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/19 19:00:36 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *str, char c)
+int	ft_strchr(const char *str, char c)
 {
 	if (!str)
-		return (NULL);
+		return (-1);
 	while (*str)
 	{
 		if (*str == c)
-			return ((char *) str);
+			return (*str);
 		str++;
 	}
 	if (*str == c)
-		return ((char *) str);
-	return (NULL);
+		return (*str);
+	return (-1);
 }
 
 int	ft_atoi(char *str, char)
@@ -41,12 +41,12 @@ int	ft_atoi(char *str, char)
 	}
 }
 
-void	ft_select_type(va_list args, char c, int flags, int *count)
+void	ft_select_type(va_list args, char c, char *flags, int n_flags, int nn_flags)
 {
 	if (c == 'c')
 		ft_putchar(va_arg(args, int), flags, count);
 	if (c == 's')
-		ft_putstr(va_arg(args, char*), flags, count);
+		ft_putstr(va_arg(args, char*), *flags, );
 	if (c == 'p')
 		ft_putptr((unsigned int)va_arg(args, void*), flags, count);
 	if (c == 'd' || c == 'i')
@@ -65,9 +65,12 @@ int ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		i;
-	int		flags;
+	int		flags[7];
 	int		n_flags;
 	int		count;
+	int		s;
+	int		nn_flags;
+	int j = 0;
 
 	i = 0;
 	n_flags = 0;
@@ -78,12 +81,16 @@ int ft_printf(const char *str, ...)
 		if (str[i] == 37)
 		{
 			i++;
-			while (ft_strchr("-0# +", str[i]))
-			{
-				flags++;
+			while ((s = ft_strchr("-0# +.", str[i++])) != -1)
+			    flags[j++] = s;
+			nn_flags = ft_atoi(s + i);
+			while (str[i] && str[i] >= 48 && str[i] <= 57)
 				i++;
-			}
+			while ((s = ft_strchr("-0# +.", str[i++])) != -1)
+				flags[j++] = s;
 			n_flags = ft_atoi(s + i);
+			while (str[i] && str[i] >= 48 && str[i] <= 57)
+			    i++;
 			if (ft_strchr("cspdiuxX%", str[i]))
 				ft_select_type(args, str[i], flags, &count);
 			i++;
