@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 22:23:10 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/21 23:41:13 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/22 03:16:15 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ int	ft_putstr(char *str, t_flags *flags)
 	str_len = ft_strlen(str);
 	if (!flags->l_z_len < str_len)
 	{
-		return (ft_
+		if (flags->percision != -1)
+			tmp = *str;
+		else
+			tmp = ft_substr(str, 0, flags->percision);
+		return (putstring(tmp));
 	}
 	else if (flags->l_z_len > str_len)
 	{

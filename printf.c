@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/21 23:55:53 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/22 01:41:44 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,9 @@ int get_flags(t_flags *flags, char *str, int i)
 	}
 	flags->l_z_len = ft_atoi(str + i);
 	i += ft_num_len(flags->l_z_len);
-	flags->percision = 0;
+	flags->percision = -1;
 	if (str[i] == '.')
-	{
 		flags->percision = ft_atoi(str + i);
-		if (flags->percision == 0)
-			flags->percision = -1;
-	}
 	i += ft_num_len(flags->per_len);
 	return (i);
 }
