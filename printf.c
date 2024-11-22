@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/22 01:41:44 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/22 21:21:41 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct printf_flags
 	int left_justify;
 	int zero_padding;
 	int space_flag;
-	int sign_flags;
+	int sign_flag;
 	int percision;
 	int alternate_form;
 	int l_z_len; //left_justify || zero_padding lenght
@@ -57,9 +57,9 @@ int get_flags(t_flags *flags, char *str, int i)
 		if (str[i] == '-')
 			flags->left_justify = 1;
 		else if (str[i] == '+')
-			flags->sign_flags = 1;
+			flags->sign_flag = 1;
 		else if (str[i] = ' ')
-			flags->space_flags = 1;
+			flags->space_flag = 1;
 		else if (str[i] == '0')
 			flags->zero_flags = 1;
 		else

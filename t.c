@@ -3,5 +3,6 @@
 
 int main()
 {
-	printf("%20.s", "hello_world");
+	printf("% i", 0);
+
 }
