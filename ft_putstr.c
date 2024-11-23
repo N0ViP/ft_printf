@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 22:23:10 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/22 03:16:15 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/23 14:02:13 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,64 +22,67 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int putstring(char *str)
+char	*ft_alloc(int len)
 {
-	int	i;
+	char	*res;
+	int		i;
 
-	i = ft_strlen(str);
-	return (write(1, str, i));
+	res = (char *) malloc(len + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < len)
+		res[i++] = ' ';
+	res[i] = '\0';
+	return (res);
 }
 
-void	ft_last_result(char *res, char *tmp, t_flags *flags)
+void	ft_fill(char *res, char *str, int str_len, t_flags *flags)
 {
-	int	tmp_len;
 	int	i;
 
-	tmp_len = ft_strlen(tmp);
 	i = 0;
-	if (!flags->left_justify)
+	if (flags->left_justify)
 	{
-		while (tmp[i])
-			res[i++] = *tmp++;
-		while (i < flags->l_z_len;)
+		while (*str)
+			res[i++] = *str++;
+		while (i < flags->width)
 			res[i++] = ' ';
-		res[i] = '\0';
 	}
 	else
 	{
-		while (i < flags->l_z_len - tmp)
+		while (i < (flags->width - str_len))
 			res[i++] = ' ';
-		while (i < flags->l_z_len)
-			res[i++] = *tmp++;
-		res[i] = '\0';
+		while (i < flags->width)
+			res[i++] = *str++;
 	}
 }
 
 int	ft_putstr(char *str, t_flags *flags)
 {
-	int		str_len;
 	char	*res;
-	char	*tmp;
+	int		str_len;
+	int		count;
 
 	str_len = ft_strlen(str);
-	if (!flags->l_z_len < str_len)
+	count = 0;
+	if (flags->percision != -1)
+		str = ft_substr(str, 0, flags->percision);
+	else
+		str = ft_substr(str, 0, str_len);
+	if (!str)
+		return (-1);
+	if (flags->width > str_len)
 	{
-		if (flags->percision != -1)
-			tmp = *str;
-		else
-			tmp = ft_substr(str, 0, flags->percision);
-		return (putstring(tmp));
-	}
-	else if (flags->l_z_len > str_len)
-	{
-		res = (char *) malloc(str_len + 1);
+		res = ft_alloc(flags->width);
 		if (!res)
 			return (-1);
-		if (flags->percision)
-			tmp = ft_substr(str, 0, flags->percision);
-		else
-			tmp = str;
-		ft_last_result(res, tmp, flas);
-		return (putstring(res));
+		ft_fill(res, str, str_len, flags);
+		count = write(1, res, flags->width);
+		free(res);
 	}
+	else
+		count = write(1, str, str_len);
+	free(str);
+	return (count);
 }

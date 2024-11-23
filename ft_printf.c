@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.c                                           :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/22 21:21:41 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/23 13:38:07 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,27 @@
 
 typedef struct printf_flags
 {
-	int left_justify;
-	int zero_padding;
-	int space_flag;
-	int sign_flag;
-	int percision;
-	int alternate_form;
-	int l_z_len; //left_justify || zero_padding lenght
+	int		left_justify;
+	char	padding;
+	int		space_flag;
+	int		sign_flag;
+	int		percision;
+	int		alternate_form;
+	int 	width;
 } t_flags;
+
+int	ft_num_len(int nb)
+{
+	int	i;
+
+	i = 0;
+	while (nb > 0)
+	{
+		nb /= 10;
+		i++;
+	}
+	return (i);
+}
 
 int	ft_select_type(char c, va_list args, t_flags *flags)
 {
@@ -52,25 +65,28 @@ int	ft_select_type(char c, va_list args, t_flags *flags)
 
 int get_flags(t_flags *flags, char *str, int i)
 {
+	flags->padding = ' ';
 	while (ft_strchr("#0- +", str[i]))
 	{
-		if (str[i] == '-')
-			flags->left_justify = 1;
-		else if (str[i] == '+')
-			flags->sign_flag = 1;
-		else if (str[i] = ' ')
-			flags->space_flag = 1;
-		else if (str[i] == '0')
-			flags->zero_flags = 1;
-		else
-			flags->alternate_form = 1;
+		flags->left_justify |= (str[i] == '-');
+		flags->sign_flag |= (str[i] == '+');
+		flags->space_flag |= (str[i] = ' ');
+		flags->alternate_form |= (str[i] == '#');
+		if (str[i] == '0')
+			flags->padding = '0';
 		i++;
 	}
+	if (flags->left_justify)
+		flags->padding = ' ';
 	flags->l_z_len = ft_atoi(str + i);
 	i += ft_num_len(flags->l_z_len);
 	flags->percision = -1;
 	if (str[i] == '.')
-		flags->percision = ft_atoi(str + i);
+	{
+		flags->percision = ft_atoi(str + (++i));
+		while (str[i] == '0')
+			i++;
+	}
 	i += ft_num_len(flags->per_len);
 	return (i);
 }

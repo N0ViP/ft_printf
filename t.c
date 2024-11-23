@@ -3,6 +3,6 @@
 
 int main()
 {
-	printf("% i", 0);
+	printf("%.#s", "1337");
 
 }

@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:51:59 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/21 01:47:45 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/23 09:06:55 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_putchar(char c, t_flags *flags)
 	int		count;
 
 	count = 0;
-	if (!flags->l_z_len || flags->l_z_len == 1)
+	if (flags->l_z_len <= 1)
 		count = write(1, &c, 1);
 	else
 	{
@@ -47,6 +47,7 @@ int	ft_putchar(char c, t_flags *flags)
 			return (-1);
 		ft_write_char(res, c, flags);
 		count = write(1, res, flags->l_z_len);
+		free(res);
 	}
 	return (count);
 }
