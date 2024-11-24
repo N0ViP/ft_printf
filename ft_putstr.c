@@ -6,21 +6,11 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/24 14:13:27 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/24 14:23:54 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 char	*ft_alloc(int len)
 {
