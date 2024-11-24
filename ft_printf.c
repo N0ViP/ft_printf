@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/23 13:38:07 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/24 03:16:37 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,7 @@ typedef struct printf_flags
 	int 	width;
 } t_flags;
 
-int	ft_num_len(int nb)
-{
-	int	i;
-
-	i = 0;
-	while (nb > 0)
-	{
-		nb /= 10;
-		i++;
-	}
-	return (i);
-}
-
-int	ft_select_type(char c, va_list args, t_flags *flags)
+int	ft_select_type(char c, va_list args, t_flags flags)
 {
 	int	count;
 
@@ -63,9 +50,8 @@ int	ft_select_type(char c, va_list args, t_flags *flags)
 	return (count);
 }
 
-int get_flags(t_flags *flags, char *str, int i)
+int ft_get_flags(t_flags *flags, char *str, int i)
 {
-	flags->padding = ' ';
 	while (ft_strchr("#0- +", str[i]))
 	{
 		flags->left_justify |= (str[i] == '-');
@@ -91,27 +77,15 @@ int get_flags(t_flags *flags, char *str, int i)
 	return (i);
 }
 
-char *ft_check_flags(char *str, t_flags **flags)
-{
-	int i;
-
-	i = 0;
-	*flags = (t_flags) malloc(t_flags);
-	if (!(*flags))
-		return (NULL);
-	i = get_flags(*flags, str, i);
-	return (str + i);
-}
-
 int ft_printf(const char *str, ...)
 {
 	va_list	args;
+	t_flags	flags;
 	int i;
 	int count;
 
 	i = 0;
 	count = 0;
-	t_flags *flags = NULL;
 	va_start(args, str);
 	while (str[i])
 	{
@@ -119,13 +93,12 @@ int ft_printf(const char *str, ...)
 			count += write(1, &str[i], 1);
 		else
 		{
-			str = ft_check_flags(str + i + 1, &flags);
-			if (str == NULL)
-				return (-1);
+			flags = {0, ' ', 0, 0, 0, 0, 0};
+			i = ft_get_flags(&flags, str, i);
 			if (ft_strchr("csdiuxX%", str[i]))
 				count += ft_select_type(str[i], args, flags);
-			else
-				return (-1);
 		}
+		i++;
 	}
+	return (count); 
 }
