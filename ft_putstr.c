@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/24 03:24:00 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/24 14:13:27 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_printstr(char *res, int str_len, t_flags iflags)
 {
 	int	count;
 
-	count= 0;
+	count = 0;
 	if (flags.width > str_len)
 	{
 		res = ft_alloc(flags.width);

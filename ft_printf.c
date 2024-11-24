@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 23:15:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/24 03:16:37 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/24 14:15:45 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef struct printf_flags
 	int		sign_flag;
 	int		percision;
 	int		alternate_form;
-	int 	width;
-} t_flags;
+	int		width;
+}	t_flags;
 
 int	ft_select_type(char c, va_list args, t_flags flags)
 {
@@ -50,13 +50,13 @@ int	ft_select_type(char c, va_list args, t_flags flags)
 	return (count);
 }
 
-int ft_get_flags(t_flags *flags, char *str, int i)
+int	ft_get_flags(t_flags *flags, char *str, int i)
 {
 	while (ft_strchr("#0- +", str[i]))
 	{
 		flags->left_justify |= (str[i] == '-');
 		flags->sign_flag |= (str[i] == '+');
-		flags->space_flag |= (str[i] = ' ');
+		flags->space_flag |= (str[i] == ' ');
 		flags->alternate_form |= (str[i] == '#');
 		if (str[i] == '0')
 			flags->padding = '0';
@@ -77,12 +77,12 @@ int ft_get_flags(t_flags *flags, char *str, int i)
 	return (i);
 }
 
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	t_flags	flags;
-	int i;
-	int count;
+	int		i;
+	int		count;
 
 	i = 0;
 	count = 0;
@@ -100,5 +100,5 @@ int ft_printf(const char *str, ...)
 		}
 		i++;
 	}
-	return (count); 
+	return (count);
 }
