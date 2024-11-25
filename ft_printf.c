@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 00:49:45 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/25 03:19:01 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ int	ft_printf(const char *str, ...)
 		}
 		i++;
 	}
+	va_end(args);
 	return (count);
 }
