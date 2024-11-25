@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:11 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 02:54:12 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/25 03:07:18 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 	int	i;
 
 	i = 0;
-	percision = ft_numlen(nb);
-	if (percision < flags.percision)
-		percision = flags.percision;
+	percision = ft_max(flags.percision, ft_numlen(nb));
 	if (flags.left_justify)
 		i = percision - 1;
 	else
