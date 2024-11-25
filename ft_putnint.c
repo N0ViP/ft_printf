@@ -1,69 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putint.c                                        :+:      :+:    :+:   */
+/*   ft_putnint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 02:55:04 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/25 00:49:11 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/25 02:54:12 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_check_sign(char *res, int nb, t_flags flags, int i)
-{
-	if (nb < 0)
-		res[i] = '-';
-	else
-	{
-		if (flags.sign_flag)
-			res[i] = '+';
-		else if (flags.space_flag)
-			res[i] = ' ';
-	}
-}
-
 void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
-	int	i;
 	int	percision;
-	int	nb_tmp;
+	int	i;
 
 	i = 0;
-	nb_tmp = nb;
-	if (nb < 0)
-		nb_tmp = -nb;
-	percision = ft_max(flags.percision, ft_numlen(nb));
+	percision = ft_numlen(nb);
+	if (percision < flags.percision)
+		percision = flags.percision;
 	if (flags.left_justify)
-		i = percision - !(nb < 0 || flags.sign_flag || flags.space_flag);
+		i = percision - 1;
 	else
 		i = total_len - 1;
 	while (percision--)
 	{
-		res[i--] = (nb_tmp % 10) + 48;
-		nb_tmp /= 10;
+		res[i--] = (nb % 10) + 48;
+		nb /= 10;
 	}
-	ft_check_sign(res, nb, flags, i);
 }
 
-int	ft_putint(int nb, t_flags flags)
+int	ft_putuint(unsigned int nb, t_flags flags)
 {
-	int		num_len;
 	int		total_len;
 	int		count;
 	char	*res;
 
 	count = 0;
-	num_len = ft_numlen(nb);
-	total_len = ft_max(num_len, flags.percision);
-	total_len = ft_max(total_len, flags.width);
-	if (total_len == num_len || total_len == flags.percision)
-		total_len += (nb < 0 || flags.space_flag || flags.sign_flag);
+	total_len = ft_max(flags.percision, ft_numlen(nb));
+	total_len = ft_max(flags.width, total_len);
 	res = ft_alloc_fill(total_len, flags);
-	if (!res)
-		return (-1);
 	ft_itoa_evo(res, nb, total_len, flags);
 	count = write(1, res, total_len);
 	return (free(res), count);

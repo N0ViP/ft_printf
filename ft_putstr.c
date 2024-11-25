@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/24 14:23:54 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/25 00:46:58 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_fill(char *res, char *str, int str_len, t_flags flags)
 	else
 	{
 		i = flags.width - str_len;
-		while (i < flags.width)
+		while (i < flags.width && *str)
 			res[i++] = *str++;
 	}
 }
