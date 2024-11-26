@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 08:22:12 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 10:08:44 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,12 @@ int	ft_putstr(char *str, t_flags flags)
 	int		count;
 
 	if (!str)
-		return (write(1, "(null)", 6));
+	{
+		if (flags.percision >= 6)
+			str = "(null)";
+		else
+			str = "";
+	}
 	str_len = ft_strlen(str);
 	count = 0;
 	if (flags.percision != -1)
