@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnint.c                                       :+:      :+:    :+:   */
+/*   ft_putuint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:11 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 03:07:18 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:15:00 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
+static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
 	int	percision;
 	int	i;

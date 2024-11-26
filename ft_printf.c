@@ -6,27 +6,13 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 11:52:55 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:55:49 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#include "ft_printf.h"
 
-typedef struct printf_flags
-{
-	int		left_justify;
-	char	padding;
-	int		space_flag;
-	int		sign_flag;
-	int		percision;
-	int		alternate_form;
-	int		width;
-}	t_flags;
-
-int	ft_select_type(char c, va_list args, t_flags flags)
+static int	ft_select_type(char c, va_list args, t_flags flags)
 {
 	int	count;
 
@@ -50,7 +36,7 @@ int	ft_select_type(char c, va_list args, t_flags flags)
 	return (count);
 }
 
-int	ft_get_flags(t_flags *flags, char *str, int i)
+static int	ft_get_flags(t_flags *flags, char *str, int i)
 {
 	while (ft_strchr("#0- +", str[i]))
 	{

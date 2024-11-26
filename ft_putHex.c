@@ -6,13 +6,13 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:44:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 10:48:31 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 14:17:44 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
+static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
 	int	percision;
 	int	i;
@@ -34,7 +34,7 @@ void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 	}
 }
 
-int	ft_putHex(unsigned int nb, t_flags flags)
+int	ft_puthex_up(unsigned int nb, t_flags flags)
 {
 	int		total_len;
 	int		count;

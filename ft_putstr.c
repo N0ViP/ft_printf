@@ -6,27 +6,13 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 10:08:44 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:13:27 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_alloc(int len)
-{
-	char	*res;
-	int		i;
-
-	res = (char *) malloc(len);
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < len)
-		res[i++] = ' ';
-	return (res);
-}
-
-void	ft_fill(char *res, char *str, int str_len, t_flags flags)
+static void	ft_fill(char *res, char *str, int str_len, t_flags flags)
 {
 	int	i;
 
@@ -42,7 +28,7 @@ void	ft_fill(char *res, char *str, int str_len, t_flags flags)
 	}
 }
 
-int	ft_printstr(char *res, int str_len, t_flags iflags)
+static int	ft_printstr(char *res, int str_len, t_flags iflags)
 {
 	int	count;
 

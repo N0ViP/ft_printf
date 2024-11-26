@@ -6,13 +6,14 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:53:26 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 14:15:29 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:48:56 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_itoa_evo(char *res, unsigned long long nb, int total_len, t_flags flags)
+static void	ft_itoa_evo(char *res, unsigned long long nb,
+	int total_len, t_flags flags)
 {
 	int	percision;
 	int	i;
@@ -37,6 +38,11 @@ int	ft_putptr(unsigned long long nb)
 	int		count;
 	char	*res;
 
+	if (nb == 0)
+	{
+		flags.percision = -1;
+		return (ft_putint("(nil)", flags));
+	}
 	total_len = ft_max(flags.percision, ft_hexlen(nb));
 	total_len = ft_max(total_len, flags.width);
 	if (total_len == ft_hexlen(nb) || total_len == percision)
