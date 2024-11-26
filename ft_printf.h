@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:21:15 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 16:24:43 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:36:22 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ int		ft_numlen(int nb);
 int		ft_hexlen(int nb);
 int		ft_putchar(char c, t_flags flags);
 int		ft_putuint(unsigned int nb, t_flags flags);
-int		ft_putptr(unsigned long long nb);
+int		ft_putptr(unsigned long long nb, t_flags flags);
 int		ft_strlen(char *str);
 char	*ft_substr(char *str, int start, int len);
+int		ft_putint(int nb, t_flags flags);
+int		ft_putstr(char *str, t_flags flags);
+char	*ft_strchr(char *str, char c);
+int		ft_atoi(char *str);
 
 #endif

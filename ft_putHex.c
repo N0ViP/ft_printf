@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 08:44:18 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 14:17:44 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/26 22:31:41 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/26 22:31:42 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_puthex_up(unsigned int nb, t_flags flags)
 
 	total_len = ft_max(ft_hexlen(nb), flags.percision);
 	total_len = ft_max(total_len, flags.width);
-	if (total_len == ft_fexlen(nb) || total_len == flags.percision)
+	if (total_len == ft_hexlen(nb) || total_len == flags.percision)
 		total_len += (2 * (flags.alternate_form));
 	res = ft_alloc_fill(total_len, flags);
 	if (!res)

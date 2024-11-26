@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:11:13 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 16:09:29 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:19:24 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	ft_putchar(char c, t_flags flags)
 		return (write(1, &c, 1));
 	else
 	{
-		res = ft_alloc_fill(flags.width);
+		res = ft_alloc(flags.width);
 		if (!res)
 			return (-1);
-		if (flags.justify)
+		if (flags.left_justify)
 			res[0] = 'c';
 		else
 			res[flags.width - 1] = 'c';
 		count = write(1, res, flags.width);
-		return (free(res), coun);
+		return (free(res), count);
 	}
 }

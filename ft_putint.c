@@ -6,13 +6,13 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 09:01:15 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:26:22 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_check_sign(char *res, int nb, t_flags flags, int i)
+static void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 {
 	if (nb < 0)
 		res[i] = '-';
@@ -25,14 +25,14 @@ void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 	}
 }
 
-int	ft_abs(int n)
+static int	ft_abs(int n)
 {
 	if (n < 0)
 		n *= -1;
 	return (n);
 }
 
-void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
+static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
 	int	i;
 	int	percision;

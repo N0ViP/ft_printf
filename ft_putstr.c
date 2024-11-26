@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 16:13:27 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:55:04 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_fill(char *res, char *str, int str_len, t_flags flags)
 	}
 }
 
-static int	ft_printstr(char *res, int str_len, t_flags iflags)
+static int	ft_printstr(char *res, char *str, int str_len, t_flags flags)
 {
 	int	count;
 
@@ -53,9 +53,10 @@ int	ft_putstr(char *str, t_flags flags)
 	int		str_len;
 	int		count;
 
+	res = NULL;
 	if (!str)
 	{
-		if (flags.percision >= 6)
+		if (flags.percision >= 6 || flags.percision == -1)
 			str = "(null)";
 		else
 			str = "";
@@ -71,6 +72,6 @@ int	ft_putstr(char *str, t_flags flags)
 		str = ft_substr(str, 0, str_len);
 	if (!str)
 		return (-1);
-	count = ft_printstr(res, str_len, flags);
+	count = ft_printstr(res, str, str_len, flags);
 	return (free(str), count);
 }
