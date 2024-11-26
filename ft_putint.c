@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 02:55:04 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 09:01:15 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 	}
 }
 
+int	ft_abs(int n)
+{
+	if (n < 0)
+		n *= -1;
+	return (n);
+}
+
 void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
 	int	i;
@@ -33,8 +40,6 @@ void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 
 	i = 0;
 	nb_tmp = nb;
-	if (nb < 0)
-		nb_tmp = -nb;
 	percision = ft_max(flags.percision, ft_numlen(nb));
 	if (flags.left_justify)
 		i = percision - !(nb < 0 || flags.sign_flag || flags.space_flag);
@@ -42,7 +47,7 @@ void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 		i = total_len - 1;
 	while (percision--)
 	{
-		res[i--] = (nb_tmp % 10) + 48;
+		res[i--] = ft_abs(nb_tmp % 10) + 48;
 		nb_tmp /= 10;
 	}
 	ft_check_sign(res, nb, flags, i);
