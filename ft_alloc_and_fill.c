@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 02:52:47 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 03:15:27 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/26 11:17:55 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_alloc_fill(int total_len, t_flags flags)
 	res = (char *) malloc(total_len);
 	if (!res)
 		return (NULL);
-	if (flags.percision != -1)
+	if (flags.percision != -1 || flags.left_justify)
 		padding = ' ';
 	else
 		padding = flags.padding;
