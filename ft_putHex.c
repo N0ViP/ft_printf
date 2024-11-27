@@ -6,18 +6,11 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 22:31:41 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 06:33:22 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 09:21:54 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	ft_max(unsigned int a, unsigned int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
 
 static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {

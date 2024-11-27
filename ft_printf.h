@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 14:21:15 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 06:42:17 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/27 08:44:48 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/27 09:25:47 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ int		ft_putstr(char *str, t_flags flags);
 char	*ft_strchr(char *str, char c);
 int		ft_atoi(char *str);
 int		ft_hexlen_ptr(unsigned long long nb);
+int		ft_max(int a, int b);
+int		ft_abs(int nb);
 
 #endif

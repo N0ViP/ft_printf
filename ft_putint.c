@@ -6,18 +6,11 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 06:02:06 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 09:23:06 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	ft_max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
 
 static void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 {
@@ -30,13 +23,6 @@ static void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 		else if (flags.space_flag)
 			res[i] = ' ';
 	}
-}
-
-static int	ft_abs(int n)
-{
-	if (n < 0)
-		n *= -1;
-	return (n);
 }
 
 static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)

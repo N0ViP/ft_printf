@@ -5,5 +5,5 @@ int main()
 {
 //	printf("\nftprintf = %i",	printf("%.s", "hello"));
 //	printf("\n");
-	ft_printf("%x", 1337);
+	ft_printf("%X", 1337);
 }
