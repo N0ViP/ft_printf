@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_max.c                                           :+:      :+:    :+:   */
+/*   ft_hexlen_ptr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 14:12:02 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/24 14:12:24 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/27 05:41:43 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/27 05:43:10 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_max(int a, int b)
+int	ft_hexlen_ptr(unsigned long long nb)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	int	i;
+
+	i = 0;
+	while (nb > 0)
+	{
+		nb /= 16;
+		i++;
+	}
+	return (i);
 }

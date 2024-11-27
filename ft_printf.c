@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 22:10:24 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 07:13:46 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ static void	ft_get_flags(t_flags *flags, char **str)
 	if (**str == '.')
 	{
 		flags->percision = ft_atoi(++(*str));
-		while (**str == '0')
+		while (**str >= '0' && **str <= '9')
 			(*str)++;
 	}
-	*str += ft_numlen(flags->percision);
 }
 
-int	ft_there_is_percentage(const char **str, va_list args)
+int	ft_there_is_percentage(char **str, va_list args)
 {
 	t_flags	flags;
 	int		count;
@@ -73,7 +72,7 @@ int	ft_there_is_percentage(const char **str, va_list args)
 	flags.percision = -1;
 	flags.alternate_form = 0;
 	flags.width = 0;
-	ft_get_flags(&flags, (char **) str);
+	ft_get_flags(&flags, str);
 	if (ft_strchr("csdiuxX%", **str))
 		count = ft_select_type(**str, args, flags);
 	return (count);
@@ -95,7 +94,7 @@ int	ft_printf(const char *str, ...)
 		if (*str != 37)
 			tmp = write(1, str, 1);
 		else
-			tmp = ft_there_is_percentage(&str, args);
+			tmp = ft_there_is_percentage((char **) &str, args);
 		if (tmp == -1)
 			return (-1);
 		count += tmp;

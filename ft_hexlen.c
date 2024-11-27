@@ -6,21 +6,21 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:53:22 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/25 18:55:17 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 05:40:56 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_hexlen(int nb)
+int	ft_hexlen(unsigned int nb)
 {
 	int	i;
 
 	i = 0;
 	while (nb > 0)
 	{
-		i++;
 		nb /= 16;
+		i++;
 	}
 	return (i);
 }

@@ -6,11 +6,18 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 21:42:43 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 21:43:39 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 06:37:43 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static int	ft_max(unsigned int a, unsigned int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
 static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 {
@@ -24,7 +31,7 @@ static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
 		i = percision - 1 + ((flags.alternate_form) * 2);
 	else
 		i = total_len - 1;
-	while (percision)
+	while (percision--)
 	{
 		res[i--] = "0123456789abcdef"[nb % 16];
 		nb /= 16;
@@ -47,6 +54,8 @@ int	ft_puthex(unsigned int nb, t_flags flags)
 	if (nb > 0 && (total_len == flags.percision || total_len == ft_hexlen(nb)))
 		total_len += (2 * (flags.alternate_form));
 	res = ft_alloc_fill(total_len, flags);
+	if (!res)
+		return (-1);
 	ft_itoa_evo(res, nb, total_len, flags);
 	count = write(1, res, total_len);
 	return (free(res), count);
