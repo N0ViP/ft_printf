@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 21:44:23 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 15:07:22 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 15:53:03 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	ft_itoa_evo(char *res, unsigned long long nb,
 int	ft_putptr(unsigned long long nb, t_flags flags)
 {
 	int		total_len;
-	int		count;
 	char	*res;
 
 	if (nb == 0)
@@ -49,6 +48,6 @@ int	ft_putptr(unsigned long long nb, t_flags flags)
 	if (!res)
 		return (-1);
 	ft_itoa_evo(res, nb, total_len, flags);
-	count = write(1, res, total_len);
-	return (free(res), count);
+	write(1, res, total_len);
+	return (free(res), total_len);
 }

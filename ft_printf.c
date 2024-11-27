@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 11:23:40 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 17:27:15 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	ft_select_type(char c, va_list args, t_flags flags)
 	else if (c == 'p')
 		count = ft_putptr((unsigned long long) va_arg(args, void *), flags);
 	else
-		count = write(1, "%", 1);
+	{
+		count = 1;
+		write(1, "%", 1);
+	}
 	return (count);
 }
 
@@ -49,7 +52,7 @@ static void	ft_get_flags(t_flags *flags, char **str)
 		(*str)++;
 	}
 	flags->width = ft_atoi(*str);
-	*str += ft_numlen(flags->width);
+	*str += (ft_numlen(flags->width) * (flags->width != 0));
 	if (**str == '.')
 	{
 		flags->percision = ft_atoi(++(*str));

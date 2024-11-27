@@ -6,7 +6,7 @@
 /*   By: yjaafar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:13:08 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 06:40:39 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 15:54:41 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ static int	ft_printstr(char *res, char *str, int str_len, t_flags flags)
 		if (!res)
 			return (-1);
 		ft_fill(res, str, str_len, flags);
-		count = write(1, res, flags.width);
+		count = flags.width;
+		write(1, res, flags.width);
 		free(res);
 	}
 	else
-		count = write(1, str, str_len);
+	{
+		count = str_len;
+		write(1, str, str_len);
+	}
 	return (count);
 }
 

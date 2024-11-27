@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hexlen.c                                        :+:      :+:    :+:   */
+/*   ft_unumlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 18:53:22 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 05:40:56 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/27 17:33:04 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/27 21:07:00 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_hexlen(unsigned int nb)
+int	ft_unumlen(unsigned int nb, int base)
 {
 	int	i;
 
-	i = 0;
-	while (nb > 0)
+	i = 1;
+	while (nb / base)
 	{
-		nb /= 16;
 		i++;
+		nb /= base;
 	}
 	return (i);
 }

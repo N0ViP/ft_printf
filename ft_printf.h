@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 08:44:48 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 09:25:47 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 21:09:28 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_alloc(int len);
 int		ft_puthex(unsigned int nb, t_flags flags);
 int		ft_puthex_up(unsigned int nb, t_flags flags);
 int		ft_numlen(int nb);
-int		ft_hexlen(unsigned int nb);
+int		ft_unumlen(unsigned int nb, int base);
 int		ft_putchar(char c, t_flags flags);
 int		ft_putuint(unsigned int nb, t_flags flags);
 int		ft_putptr(unsigned long long nb, t_flags flags);
