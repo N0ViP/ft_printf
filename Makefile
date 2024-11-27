@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 NAME = libftprintf.a
 FILES = ft_alloc_and_fill.c	ft_putHex.c	ft_putstr.c	ft_substr.c	ft_atoi.c	ft_strchr.c	\
 	ft_alloc.c	ft_numlen.c	ft_putchar.c	ft_putint.c	ft_putuint.c	ft_hexlen_ptr.c	\

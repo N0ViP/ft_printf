@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 07:13:46 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/27 11:23:40 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_there_is_percentage(char **str, va_list args)
 	flags.alternate_form = 0;
 	flags.width = 0;
 	ft_get_flags(&flags, str);
-	if (ft_strchr("csdiuxX%", **str))
+	if (ft_strchr("csdiuxXp%", **str))
 		count = ft_select_type(**str, args, flags);
 	return (count);
 }
