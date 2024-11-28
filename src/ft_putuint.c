@@ -1,29 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putuint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 18:50:47 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:50:08 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 16:59:37 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/28 17:29:48 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_atoi(char *str)
+static int	ft_unumlen(unsigned int nb)
 {
-	int	res;
+	int	i;
 
-	res = 0;
-	while (*str >= 48 && *str <= 57)
+	i = 1;
+	while (nb / 10)
 	{
-		res = (res * 10);
-		if (res < 0)
-			return (-1);
-		res += *str - 48;
-		str++;
+		nb /= 10;
+		i++;
 	}
-	return (res);
+	return (i);
+}
+
+int	ft_putuint(unsigned int nb)
+{
+	int		unum_len;
+	int		i;
+	char	*res;
+
+	unum_len = ft_unumlen(nb);
+	res = (char *) malloc(unum_len);
+	if (!res)
+		return (-2);
+	i = unum_len - 1;
+	while (i)
+	{
+		res[i--] = (nb % 10) + 48;
+		nb /= 10;
+	}
+	write(1, res, unum_len);
+	return (free(res), unum_len);
 }

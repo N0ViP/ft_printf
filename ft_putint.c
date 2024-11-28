@@ -6,13 +6,13 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 17:20:59 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/28 09:20:06 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_check_sign(char *res, int nb, t_flags flags, int i)
+static void	ft_check_sign(char *res, int nb, t_flags flags, int i);
 {
 	if (nb < 0)
 		res[i] = '-';

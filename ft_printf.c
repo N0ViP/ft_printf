@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 17:27:15 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/28 12:12:49 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	ft_get_flags(t_flags *flags, char **str)
 		flags->sign_flag |= (**str == '+');
 		flags->space_flag |= (**str == ' ');
 		flags->alternate_form |= (**str == '#');
-		if (**str == '0')
+		if (**str == '0' && !flags->left)
 			flags->padding = '0';
 		(*str)++;
 	}
@@ -59,6 +59,25 @@ static void	ft_get_flags(t_flags *flags, char **str)
 		while (**str >= '0' && **str <= '9')
 			(*str)++;
 	}
+}
+
+int	ft_print_flags(t_flags flags, char c)
+{
+	int	count;
+
+	count = 0;
+	if (c == '\0')
+		return (-1);
+	count += write(1, "#", (flags.alternate_fom));
+	count += write(1, "+", (flags.sign_flag));
+	count += write(1, " ", (flags.space_flag && !flags.sign_flag));
+	count += write(1, "-", (flags.left_justify));
+	count += write(1, "0", (flags.zero_flag && !flags.left_justify));
+	if (flags.width)
+		count += ft_putint(flags.width, (t_flags){0, ' ', 0, 0, -1, 0, 0});
+	count += write(1, ".", (flags.percision != -1));
+	if (flags.percision != -1)
+		count += ft_putint(flags.width, (t_flags){0, ' ', 0, 0, -1, 0, 0});
 }
 
 int	ft_there_is_percentage(char **str, va_list args)
@@ -78,6 +97,8 @@ int	ft_there_is_percentage(char **str, va_list args)
 	ft_get_flags(&flags, str);
 	if (ft_strchr("csdiuxXp%", **str))
 		count = ft_select_type(**str, args, flags);
+	else
+		count = ft_print_flags(flags, **str);
 	return (count);
 }
 
@@ -98,8 +119,7 @@ int	ft_printf(const char *str, ...)
 			tmp = write(1, str, 1);
 		else
 			tmp = ft_there_is_percentage((char **) &str, args);
-		if (tmp == -1)
-			return (-1);
+
 		count += tmp;
 		str++;
 	}

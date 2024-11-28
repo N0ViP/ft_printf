@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 21:44:23 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 15:53:03 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/28 09:27:35 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_itoa_evo(char *res, unsigned long long nb,
 
 	percision = ft_max(ft_hexlen_ptr(nb), flags.percision);
 	if (flags.left_justify)
-		i = percision + 1;
+		i = percision + 1 + (flags.sign_flag || flags.space_flag);
 	else
 		i = total_len - 1;
 	while (percision--)
@@ -30,6 +30,10 @@ static void	ft_itoa_evo(char *res, unsigned long long nb,
 	}
 	res[i--] = 'x';
 	res[i] = '0';
+	if (flags.sign_flag)
+		res[i] = '+';
+	else if (flags.space_flag)
+		res[i] = ' ';
 }
 
 int	ft_putptr(unsigned long long nb, t_flags flags)
@@ -43,7 +47,7 @@ int	ft_putptr(unsigned long long nb, t_flags flags)
 		return (ft_putstr("(nil)", flags));
 	}
 	total_len = ft_max(flags.percision, ft_hexlen_ptr(nb)) + 2;
-	total_len = ft_max(total_len, flags.width);
+	total_len = ft_max(total_len, flags.width) + (flags.sign_flag || flags.space_flag);
 	res = ft_alloc_fill(total_len, flags);
 	if (!res)
 		return (-1);

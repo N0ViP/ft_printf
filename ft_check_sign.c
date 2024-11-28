@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_check_sign.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 18:50:47 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:50:08 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 08:55:46 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/28 08:57:42 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_atoi(char *str)
+void	ft_check_sign(char *res, int nb, t_flags flags, int i)
 {
-	int	res;
-
-	res = 0;
-	while (*str >= 48 && *str <= 57)
+	if (nb < 0)
+		res[i] = '-';
+	else
 	{
-		res = (res * 10);
-		if (res < 0)
-			return (-1);
-		res += *str - 48;
-		str++;
-	}
-	return (res);
+		if (flags.sign_flag)
+			res[i] = '+';
+		else if (flags.space_flag)
+			res[i] = ' ';
+		}
 }

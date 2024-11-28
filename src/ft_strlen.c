@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 18:50:47 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:50:08 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 16:27:39 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/28 16:30:02 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_atoi(char *str)
+int	ft_strlen(char *str)
 {
-	int	res;
+	int	i;
 
-	res = 0;
-	while (*str >= 48 && *str <= 57)
-	{
-		res = (res * 10);
-		if (res < 0)
-			return (-1);
-		res += *str - 48;
-		str++;
-	}
-	return (res);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }

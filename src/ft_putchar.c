@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 18:50:47 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:50:08 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 15:59:16 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/28 16:27:30 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_atoi(char *str)
+int	ft_putchar(char c)
 {
-	int	res;
-
-	res = 0;
-	while (*str >= 48 && *str <= 57)
-	{
-		res = (res * 10);
-		if (res < 0)
-			return (-1);
-		res += *str - 48;
-		str++;
-	}
-	return (res);
+	write(1, &c, 1);
+	return (1);
 }
