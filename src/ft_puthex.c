@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:32:39 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:44:55 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/29 09:00:54 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_hexlen(unsigned int nb)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (nb / 16)
 	{
 		i++;
@@ -41,13 +41,13 @@ int	ft_puthex(unsigned int nb, char c)
 
 	hex_len = ft_hexlen(nb);
 	base = ft_select_base(c);
-	i = hex_len - 1;
+	i = hex_len;
 	res = (char *) malloc(hex_len);
 	if (!res)
 		return (-2);
-	while (i)
+	while (i--)
 	{
-		res[i--] = base[nb % 16];
+		res[i] = base[nb % 16];
 		nb /= 16;
 	}
 	write(1, res, hex_len);

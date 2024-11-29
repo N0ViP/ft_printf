@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:59:37 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:29:48 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/28 23:53:51 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	ft_putuint(unsigned int nb)
 	res = (char *) malloc(unum_len);
 	if (!res)
 		return (-2);
-	i = unum_len - 1;
-	while (i)
+	i = unum_len;
+	while (i--)
 	{
-		res[i--] = (nb % 10) + 48;
+		res[i] = (nb % 10) + 48;
 		nb /= 10;
 	}
 	write(1, res, unum_len);

@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:10:34 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:29:23 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/29 08:53:07 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ static int	ft_numlen(int nb)
 	return (i);
 }
 
+static int	ft_abs(int nb)
+{
+	if (nb < 0)
+		nb *= -1;
+	return (nb);
+}
+
 int	ft_putint(int nb)
 {
 	int		num_len;
@@ -35,20 +42,17 @@ int	ft_putint(int nb)
 	sign = 0;
 	num_len = ft_numlen(nb);
 	if (nb < 0)
-	{
 		sign = 1;
-		nb *= -1;
-	}
 	res = (char *) malloc(num_len + sign);
 	if (!res)
 		return (-2);
-	i = num_len - 1;
-	while (i)
+	i = num_len + (sign);
+	while (i--)
 	{
-		res[i--] = (nb % 10) + '0';
+		res[i] = ft_abs(nb % 10) + '0';
 		nb /= 10;
 	}
-	if (nb < 0)
+	if (sign)
 		res[0] = '-';
 	write(1, res, num_len + sign);
 	return (free(res), (num_len + sign));

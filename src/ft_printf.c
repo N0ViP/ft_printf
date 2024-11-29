@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:51:32 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 20:33:44 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/11/29 09:11:58 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ static int  ft_select_type(va_list args, char c)
 	return (count);
 }
 
+int	ft_check_format(char **str, va_list args)
+{
+	int	count;
+
+	count = 0;
+	if (ft_strchr("csiduxXp%", *(*str + 1)))
+	{
+		count = ft_select_type(args, *(*str + 1));
+		(*str)++;
+	}
+	else
+	{
+		count = 1;
+		write(1, *str, 1);
+	}
+	return (count);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
@@ -54,18 +72,7 @@ int	ft_printf(const char *str, ...)
 			write(1, str, 1);
 		}
 		else
-		{
-			if (ft_strchr("csiduxXp%", *(str + 1)))
-			{
-				tmp = ft_select_type(args, *(str + 1));
-				str++;
-			}
-			else
-			{
-				tmp = 1;
-				write(1, str, 1);
-			}
-		}
+			tmp = ft_check_format((char **) &str, args);
 		if (tmp == -2)
 			return (-1);
 		count += tmp;
