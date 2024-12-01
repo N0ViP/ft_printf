@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_sign.c                                    :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 08:55:46 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 08:57:42 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 16:27:39 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/28 16:30:02 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_check_sign(char *res, int nb, t_flags flags, int i)
+int	ft_strlen(char *str)
 {
-	if (nb < 0)
-		res[i] = '-';
-	else
-	{
-		if (flags.sign_flag)
-			res[i] = '+';
-		else if (flags.space_flag)
-			res[i] = ' ';
-		}
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }

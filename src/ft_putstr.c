@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 09:23:50 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 09:25:23 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/28 16:07:02 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/11/29 08:51:07 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_abs(int nb)
+int	ft_putstr(char *str)
 {
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
+	int	str_len;
+
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	str_len = ft_strlen(str);
+	write(1, str, str_len);
+	return (str_len);
 }
