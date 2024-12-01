@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 10:18:27 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 09:20:06 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 09:24:38 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 17:52:55 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_check_sign(char *res, int nb, t_flags flags, int i);
+static void	ft_check_sign(char *res, int nb, int i, t_flags flags)
 {
 	if (nb < 0)
 		res[i] = '-';
@@ -25,44 +25,46 @@ static void	ft_check_sign(char *res, int nb, t_flags flags, int i);
 	}
 }
 
-static void	ft_itoa_evo(char *res, int nb, int total_len, t_flags flags)
+static char	*ft_itoa_evo(int nb, int total_len, int precision, t_flags flags)
 {
-	int	i;
-	int	percision;
-	int	nb_tmp;
+	char	*res;
+	int		i;
+	int		sign;
+	int		tmp_nb;
 
-	i = 0;
-	nb_tmp = nb;
-	percision = ft_max(flags.percision, ft_numlen(nb));
-	if (flags.left_justify)
-		i = percision - !(nb < 0 || flags.sign_flag || flags.space_flag);
+	sign = (nb < 0 || flags.sign_flag || flags.space_flag);
+	res = (char *) malloc(total_len);
+	if (!res)
+		return (NULL);
+	tmp_nb = nb;
+	if (flags.width > precision + sign)
+		i = ft_fill_with_padding(res, total_len, precision, flags) + sign;
 	else
-		i = total_len - 1;
-	if (nb == 0 && flags.percision == -1)
-		res[i] = '0';
-	while (percision--)
+		i = precision - 1 + sign;
+	while (precision--)
 	{
-		res[i--] = ft_abs(nb_tmp % 10) + 48;
-		nb_tmp /= 10;
+		res[i--] = ft_abs(tmp_nb % 10) + 48;
+		tmp_nb /= 10;
 	}
-	if (nb != 0)
-		ft_check_sign(res, nb, flags, i);
+	ft_check_sign(res, nb, i, flags);
+	return (res);
 }
 
 int	ft_putint(int nb, t_flags flags)
 {
-	int		num_len;
 	int		total_len;
+	int		sign;
+	int		precision;
 	char	*res;
 
-	num_len = ft_numlen(nb);
-	total_len = ft_max(num_len, flags.percision)
-		+ (nb < 0 || flags.space_flag || flags.sign_flag);
-	total_len = ft_max(total_len, flags.width);
-	res = ft_alloc_fill(total_len, flags);
+	sign = (nb < 0 || flags.sign_flag || flags.space_flag);
+	precision = ft_max(ft_numlen(nb), flags.precision);
+	total_len = ft_max((precision + sign), flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, total_len, precision, flags);
 	if (!res)
 		return (-1);
-	ft_itoa_evo(res, nb, total_len, flags);
 	write(1, res, total_len);
 	return (free(res), total_len);
 }

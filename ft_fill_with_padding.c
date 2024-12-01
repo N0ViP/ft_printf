@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_fill_with_padding.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:07:02 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/29 08:51:07 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/30 17:53:22 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:27:30 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(char *str)
+int	ft_fill_with_padding(char *res, int total_len, int precision, t_flags flags)
 {
-	int	str_len;
+	int	start;
+	int	end;
+	int	i;
 
-	if (!str)
+	start = 0;
+	end = 0;
+	i = 0;
+	if (flags.left_justify)
 	{
-		write(1, "(null)", 6);
-		return (6);
+		start = precision;
+		end = total_len - 1;
+		i = precision - 1;
 	}
-	str_len = ft_strlen(str);
-	write(1, str, str_len);
-	return (str_len);
+	else
+	{
+		start = 0;
+		end = total_len - precision;
+		i = total_len - 1;
+	}
+	res = (char *) ft_memset(res + start, end - start + 1, flags.padding);
+	return (i);
 }

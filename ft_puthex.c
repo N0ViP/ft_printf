@@ -5,51 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 21:42:43 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 21:08:25 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 15:09:38 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:26:32 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_itoa_evo(char *res, unsigned int nb, int total_len, t_flags flags)
+static void	ft_get_alternate_form(char *res, int i, t_flags flags)
 {
-	unsigned int	percision;
-	unsigned int	i;
-	unsigned int	tmp_nb;
-
-	tmp_nb = nb;
-	percision = ft_max(ft_unumlen(nb, 16), flags.percision);
-	if (flags.left_justify)
-		i = percision - 1 + ((flags.alternate_form) * 2);
+	if (flags.base == 'x')
+		res[i--] = 'x';
 	else
-		i = total_len - 1;
-	if (nb == 0)
-		res[i] = '0';
-	while (percision--)
+		res[i--] = 'X';
+	res[i] = '0';
+}
+
+static char	*ft_itoa_evo(unsigned int nb, int total_len,
+	int precision, t_flags flags)
+{
+	char	*res;
+	char	*base;
+	int		alternate;
+	int		i;
+
+	res = (char *) malloc(total_len);
+	if (!res)
+		return (NULL);
+	if (flags.base == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	alternate = 2 * (flags.alternate_form && nb != 0);
+	if (flags.width > precision + alternate)
+		i = ft_fill_with_padding(res, total_len, precision, flags);
+	else
+		i = precision + alternate;
+	while (precision--)
 	{
-		res[i--] = "0123456789abcdef"[nb % 16];
+		res[i--] = base[nb % 16];
 		nb /= 16;
 	}
-	if (flags.alternate_form && tmp_nb > 0)
-	{
-		res[i--] = 'x';
-		res[i] = '0';
-	}
+	if (alternate)
+		ft_get_alternate_form(res, i, flags);
+	return (res);
 }
 
 int	ft_puthex(unsigned int nb, t_flags flags)
 {
 	int		total_len;
+	int		precision;
+	int		alternate;
 	char	*res;
 
-	total_len = ft_max(ft_unumlen(nb, 16), flags.percision)
-		+ (2 * ((nb > 0) && (flags.alternate_form)));
-	total_len = ft_max(total_len, flags.width);
-	res = ft_alloc_fill(total_len, flags);
+	alternate = 2 * (flags.alternate_form && nb != 0);
+	precision = ft_max(ft_unsigned_int_len(nb), flags.precision);
+	total_len = ft_max((precision + alternate), flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, total_len, precision, flags);
 	if (!res)
 		return (-1);
-	ft_itoa_evo(res, nb, total_len, flags);
 	write(1, res, total_len);
 	return (free(res), total_len);
 }

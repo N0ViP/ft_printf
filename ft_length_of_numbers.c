@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putint.c                                        :+:      :+:    :+:   */
+/*   ft_length_of_numbers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:10:34 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/29 08:53:07 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 15:44:40 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:26:15 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_numlen(int nb)
+int	ft_unsigned_int_len(unsigned int nb)
 {
 	int	i;
 
@@ -25,35 +25,28 @@ static int	ft_numlen(int nb)
 	return (i);
 }
 
-static int	ft_abs(int nb)
+int	ft_unsigned_ll_len(unsigned long long nb)
 {
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
-}
+	int	i;
 
-int	ft_putint(int nb)
-{
-	int		num_len;
-	int		i;
-	int		sign;
-	char	*res;
-
-	sign = 0;
-	num_len = ft_numlen(nb);
-	if (nb < 0)
-		sign = 1;
-	res = (char *) malloc(num_len + sign);
-	if (!res)
-		return (-2);
-	i = num_len + (sign);
-	while (i--)
+	i = 1;
+	while (nb / 10)
 	{
-		res[i] = ft_abs(nb % 10) + '0';
+		i++;
 		nb /= 10;
 	}
-	if (sign)
-		res[0] = '-';
-	write(1, res, num_len + sign);
-	return (free(res), (num_len + sign));
+	return (i);
+}
+
+int	ft_numlen(int nb)
+{
+	int	i;
+
+	i = 1;
+	while (nb / 10)
+	{
+		i++;
+		nb /= 10;
+	}
+	return (i);
 }

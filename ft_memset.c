@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 09:23:50 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 09:25:23 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/30 16:18:02 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 13:11:57 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_abs(int nb)
+void	*ft_memset(void *res, int len, char c)
 {
-	if (nb < 0)
-		nb *= -1;
-	return (nb);
+	size_t	padding;
+	char	*ptr;
+	int		size;
+
+	padding = c * 0x0101010101010101;
+	ptr = (char *)res;
+	size = sizeof(size_t);
+	while (len >= size)
+	{
+		*(size_t *) ptr = padding;
+		ptr += size;
+		len -= size;
+	}
+	while (len--)
+		*(char *) ptr++ = c;
+	return (res);
 }

@@ -5,42 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 00:49:11 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 21:07:29 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 14:44:53 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:27:01 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_itoa_evo(char *res, unsigned int nb, int total_len, t_flags flags)
+static char	*ft_itoa_evo(unsigned int nb, int precision,
+	int total_len, t_flags flags)
 {
-	int	percision;
-	int	i;
+	int		i;
+	char	*res;
 
-	i = 0;
-	percision = ft_max(flags.percision, ft_unumlen(nb, 10));
-	if (flags.left_justify)
-		i = percision - 1;
+	res = malloc(total_len);
+	if (!res)
+		return (NULL);
+	if (flags.width > precision)
+		i = ft_fill_with_padding(res, total_len, precision, flags);
 	else
-		i = total_len - 1;
-	if (nb == 0)
-		res[i] = '0';
-	while (percision--)
+		i = precision;
+	while (precision--)
 	{
-		res[i--] = (nb % 10) + 48;
+		res[i] = (nb % 10) + 48;
 		nb /= 10;
 	}
+	return (res);
 }
 
 int	ft_putuint(unsigned int nb, t_flags flags)
 {
 	int		total_len;
+	int		precision;
 	char	*res;
 
-	total_len = ft_max(flags.percision, ft_unumlen(nb, 10));
-	total_len = ft_max(flags.width, total_len);
-	res = ft_alloc_fill(total_len, flags);
-	ft_itoa_evo(res, nb, total_len, flags);
+	precision = ft_max(ft_unsigned_int_len(nb), flags.precision);
+	total_len = ft_max(precision, flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, precision, total_len, flags);
+	if (!res)
+		return (-1);
 	write(1, res, total_len);
 	return (free(res), total_len);
 }

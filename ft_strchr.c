@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 18:48:00 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/26 18:50:13 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 17:10:25 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 17:12:14 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 char	*ft_strchr(char *str, char c)
 {
-	if (!str)
-		return (NULL);
 	while (*str)
 	{
 		if (*str == c)
 			return (str);
 		str++;
 	}
-	if (*str == c)
-		return (str);
-	return (NULL);
+	return (0);
 }

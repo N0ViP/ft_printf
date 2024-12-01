@@ -5,30 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 00:49:36 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 12:12:49 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/30 13:13:59 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:43:08 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_select_type(char c, va_list args, t_flags flags)
+int	ft_check_percentage(char *format)
+{
+	int	i = 0;
+
+	while (format[i])
+	{
+		if (format[i] == '%')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+int	ft_get_flags(char *format, t_flags *flags)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strchr("#+ -0", format[i]))
+	{
+		if (format[i] == '#')
+			flags->alternate_form = 1;
+		else if (format[i] == '+')
+			flags->sign_flag = 1;
+		else if (format[i] == ' ')
+			flags->space_flag = 1;
+		else if (format[i] == '-')
+			flags->left_justify = 1;
+		else if (format[i] == '0')
+			flags->padding = '0';
+		i++;
+	}
+	return (i);
+}
+
+int	ft_get_width_precision(char *format, t_flags *flags)
+{
+	int	i;
+
+	i = 0;
+	flags->width = ft_atoi(format);
+	if (flags->width == -2)
+		return (-1);
+	if (flags->width)
+		i += ft_numlen(flags->width);
+	if (*format == '.')
+	{
+		i++;
+		flags->precision = ft_atoi(format);
+		if (flags->precision == -2)
+			return (-1);
+		while (format[i] >= '0' && format[i] <= '9')
+			i++;
+	}
+	return (i);
+}
+
+int	ft_select_type(char c, va_list args, t_flags flags)
 {
 	int	count;
 
-	count = 0;
 	if (c == 'c')
 		count = ft_putchar(va_arg(args, int), flags);
 	else if (c == 's')
 		count = ft_putstr(va_arg(args, char *), flags);
-	else if (c == 'd' || c == 'i')
+	else if (c == 'i' || c == 'd')
 		count = ft_putint(va_arg(args, int), flags);
+	else if (c == 'x' || c == 'X')
+	{
+		flags.base = c;
+		count = ft_puthex(va_arg(args, unsigned int), flags);
+	}
 	else if (c == 'u')
 		count = ft_putuint(va_arg(args, unsigned int), flags);
-	else if (c == 'x')
-		count = ft_puthex(va_arg(args, unsigned int), flags);
-	else if (c == 'X')
-		count = ft_puthex_up(va_arg(args, unsigned int), flags);
 	else if (c == 'p')
 		count = ft_putptr((unsigned long long) va_arg(args, void *), flags);
 	else
@@ -39,90 +96,121 @@ static int	ft_select_type(char c, va_list args, t_flags flags)
 	return (count);
 }
 
-static void	ft_get_flags(t_flags *flags, char **str)
-{
-	while (ft_strchr("#0- +", **str))
-	{
-		flags->left_justify |= (**str == '-');
-		flags->sign_flag |= (**str == '+');
-		flags->space_flag |= (**str == ' ');
-		flags->alternate_form |= (**str == '#');
-		if (**str == '0' && !flags->left)
-			flags->padding = '0';
-		(*str)++;
-	}
-	flags->width = ft_atoi(*str);
-	*str += (ft_numlen(flags->width) * (flags->width != 0));
-	if (**str == '.')
-	{
-		flags->percision = ft_atoi(++(*str));
-		while (**str >= '0' && **str <= '9')
-			(*str)++;
-	}
-}
-
-int	ft_print_flags(t_flags flags, char c)
+int	ft_print_flags(t_flags flags)
 {
 	int	count;
 
 	count = 0;
-	if (c == '\0')
-		return (-1);
-	count += write(1, "#", (flags.alternate_fom));
-	count += write(1, "+", (flags.sign_flag));
-	count += write(1, " ", (flags.space_flag && !flags.sign_flag));
-	count += write(1, "-", (flags.left_justify));
-	count += write(1, "0", (flags.zero_flag && !flags.left_justify));
-	if (flags.width)
-		count += ft_putint(flags.width, (t_flags){0, ' ', 0, 0, -1, 0, 0});
-	count += write(1, ".", (flags.percision != -1));
-	if (flags.percision != -1)
-		count += ft_putint(flags.width, (t_flags){0, ' ', 0, 0, -1, 0, 0});
-}
-
-int	ft_there_is_percentage(char **str, va_list args)
-{
-	t_flags	flags;
-	int		count;
-
-	count = 0;
-	(*str)++;
-	flags.left_justify = 0;
-	flags.padding = ' ';
-	flags.space_flag = 0;
-	flags.sign_flag = 0;
-	flags.percision = -1;
-	flags.alternate_form = 0;
-	flags.width = 0;
-	ft_get_flags(&flags, str);
-	if (ft_strchr("csdiuxXp%", **str))
-		count = ft_select_type(**str, args, flags);
-	else
-		count = ft_print_flags(flags, **str);
+	if (flags.alternate_form)
+	{
+		count++;
+		write(1, "#", 1);
+	}
+	if (flags.sign_flag || flags.space_flag)
+	{
+		count++;
+		if (flags.sign_flag)
+			write(1, "+", 1);
+		else
+			write (1, " ", 1);
+	}
+	if (flags.left_justify || flags.padding == '0')
+	{
+		count++;
+		if (flags.left_justify)
+			write(1, "-", 1);
+		else
+			write(1, "0", 1);
+	}
 	return (count);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_print_width_precision(t_flags flags)
+{
+	int		width_len;
+	int		precision_len;
+	t_flags	initial;
+
+	width_len = 0;
+	precision_len = 0;
+	initial = (t_flags){0, 0, 0, 0, -1, 0, 'b', ' '};
+	if (flags.width != 0)
+		width_len = ft_putint(flags.width, initial);
+	if (width_len == -1)
+		return (-1);
+	if (flags.precision != -1)
+	{
+		write(1, ".", 1);
+		precision_len = ft_putint(flags.precision, initial);
+		if (precision_len == -1)
+			return (-1);
+		precision_len += 1;
+	}
+	return (width_len + precision_len);
+}
+
+int	ft_theres_no_type(t_flags flags)
+{
+	int	flags_len;
+	int	width_precision_len;
+
+	write(1, "%", 1);
+	flags_len = ft_print_flags(flags);
+	width_precision_len = ft_print_width_precision(flags);
+	if (width_precision_len == -1)
+		return (-1);
+	return (flags_len + width_precision_len);
+}
+
+int	ft_get_flags_and_select_type(char **format, va_list args)
+{
+	int		flags_len;
+	int		width_precision_len;
+	int		count;
+	t_flags	flags;
+
+	flags = (t_flags){0, 0, 0, 0, -1, 0, 'b', ' '};
+	flags_len = ft_get_flags(*format, &flags);
+	width_precision_len = ft_get_width_precision(*(format + flags_len), &flags);
+	if (width_precision_len == -1)
+		return (-1);
+	*format += flags_len + width_precision_len;
+	if (**format == '\0')
+		return (-1);
+	if (ft_strchr("csiduxXp%", **format))
+		count = ft_select_type(**format, args, flags);
+	else
+		count = ft_theres_no_type(flags);
+	return (count);
+}
+
+int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		tmp;
 	int		count;
+	int		i;
+	int		tmp;
 
-	count = 0;
-	if (!str)
+	if (!format)
 		return (-1);
-	va_start(args, str);
-	while (*str)
+	count = 0;
+	va_start(args, format);
+	while (*format)
 	{
-		tmp = 0;
-		if (*str != 37)
-			tmp = write(1, str, 1);
-		else
-			tmp = ft_there_is_percentage((char **) &str, args);
-
+		i = ft_check_percentage((char *) format);
+		write(1, format, i);
+		count += i;
+		if (format[i] == '\0')
+			return (count);
+		if (format[i] == '%')
+		{
+			format += i + 1;
+			tmp = ft_get_flags_and_select_type((char **) &format, args);
+			if (tmp == -1)
+				return (-1);
+		}
 		count += tmp;
-		str++;
+		format++;
 	}
-	va_end(args);
-	return (count);
+	return (va_end(args), i);
 }

@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_max_min_abs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 00:36:00 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/27 06:40:23 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 11:54:17 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:29:24 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_substr(char *str, int start, int len)
+int	ft_max(int a, int b)
 {
-	char	*res;
-	int		str_len;
-	int		i;
+	if (a > b)
+		return (a);
+	return (b);
+}
 
-	i = 0;
-	str_len = ft_strlen(str);
-	if (len < start)
-		return (NULL);
-	if (len > str_len - start)
-		len = str_len - start;
-	res = (char *) malloc(len + 1);
-	if (!res)
-		return (NULL);
-	while (len--)
-		res[i++] = str[start++];
-	res[i] = '\0';
-	return (res);
+int	ft_min(int a, int b)
+{
+	if (a > b)
+		return (b);
+	return (a);
+}
+
+int	ft_abs(int nb)
+{
+	if (nb < 0)
+		return (-nb);
+	return (nb);
 }

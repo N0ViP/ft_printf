@@ -5,47 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 08:44:48 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 09:17:02 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/30 15:41:19 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:28:58 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <stdarg.h>
+# include <stdio.h>
 
-typedef struct printf_flags
+typedef struct s_flags
 {
-	int		left_justify;
-	char	padding;
-	int		space_flag;
-	int		sign_flag;
-	int		percision;
 	int		alternate_form;
+	int		sign_flag;
+	int		space_flag;
+	int		left_justify;
+	int		precision;
 	int		width;
+	char	base;
+	char	padding;
 }	t_flags;
 
-int		ft_printf(const char *str, ...);
-char	*ft_alloc_fill(int total_len, t_flags flags);
-char	*ft_alloc(int len);
-int		ft_puthex(unsigned int nb, t_flags flags);
-int		ft_puthex_up(unsigned int nb, t_flags flags);
+int		ft_abs(int nb);
 int		ft_numlen(int nb);
-int		ft_unumlen(unsigned int nb, int base);
+int		ft_atoi(char *str);
+int		ft_max(int a, int b);
+int		ft_min(int a, int b);
+int		ft_strlen(char *str);
+char	*ft_strchr(char *str, char c);
+int		ft_putint(int nb, t_flags flags);
 int		ft_putchar(char c, t_flags flags);
+int		ft_printf(const char *format, ...);
+int		ft_putstr(char *str, t_flags flags);
+int		ft_unsigned_int_len(unsigned int nb);
+void	*ft_memset(void *res, int len, char c);
+int		ft_unsigned_ll_len(unsigned long long nb);
+int		ft_puthex(unsigned int nb, t_flags flags);
 int		ft_putuint(unsigned int nb, t_flags flags);
 int		ft_putptr(unsigned long long nb, t_flags flags);
-int		ft_strlen(char *str);
-char	*ft_substr(char *str, int start, int len);
-int		ft_putint(int nb, t_flags flags);
-int		ft_putstr(char *str, t_flags flags);
-char	*ft_strchr(char *str, char c);
-int		ft_atoi(char *str);
-int		ft_hexlen_ptr(unsigned long long nb);
-int		ft_max(int a, int b);
-int		ft_abs(int nb);
+int		ft_fill_with_padding(char *res, int total_len,
+			int precision, t_flags flags);
 
 #endif

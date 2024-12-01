@@ -5,53 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 21:44:23 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 09:27:35 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 16:00:14 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/01 18:35:47 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_itoa_evo(char *res, unsigned long long nb,
-	int total_len, t_flags flags)
+static char	*ft_itoa_evo(unsigned long long nb,
+	int total_len, int precision, t_flags flags)
 {
-	int	percision;
-	int	i;
+	int		i;
+	char	*res;
 
-	percision = ft_max(ft_hexlen_ptr(nb), flags.percision);
-	if (flags.left_justify)
-		i = percision + 1 + (flags.sign_flag || flags.space_flag);
+	res = (char *) malloc(total_len);
+	if (!res)
+		return (NULL);
+	if (flags.width > precision + 2)
+		i = ft_fill_with_padding(res, total_len, precision, flags);
 	else
-		i = total_len - 1;
-	while (percision--)
+		i = precision + 2;
+	while (precision--)
 	{
 		res[i--] = "0123456789abcdef"[nb % 16];
 		nb /= 16;
 	}
 	res[i--] = 'x';
 	res[i] = '0';
-	if (flags.sign_flag)
-		res[i] = '+';
-	else if (flags.space_flag)
-		res[i] = ' ';
+	return (res);
 }
 
 int	ft_putptr(unsigned long long nb, t_flags flags)
 {
 	int		total_len;
+	int		precision;
 	char	*res;
 
 	if (nb == 0)
 	{
-		flags.percision = -1;
+		flags.precision = -1;
 		return (ft_putstr("(nil)", flags));
 	}
-	total_len = ft_max(flags.percision, ft_hexlen_ptr(nb)) + 2;
-	total_len = ft_max(total_len, flags.width) + (flags.sign_flag || flags.space_flag);
-	res = ft_alloc_fill(total_len, flags);
+	precision = ft_max(ft_unsigned_ll_len(nb), flags.precision);
+	total_len = ft_max(precision + 2, flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, total_len, precision, flags);
 	if (!res)
 		return (-1);
-	ft_itoa_evo(res, nb, total_len, flags);
 	write(1, res, total_len);
 	return (free(res), total_len);
 }
