@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 15:20:28 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/01 17:19:47 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/01 23:26:23 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_putchar(char c, t_flags flags)
 	int		i;
 	char	*res;
 
-	if (flags.width < 1)
+	if (flags.width <= 1)
 	{
 		write(1, &c, 1);
 		return (1);

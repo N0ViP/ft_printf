@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:53:22 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/01 18:27:30 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 10:42:27 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_fill_with_padding(char *res, int total_len, int precision, t_flags flags)
 	if (flags.left_justify)
 	{
 		start = precision;
-		end = total_len - 1;
+		end = total_len;
 		i = precision - 1;
 	}
 	else
@@ -33,6 +33,6 @@ int	ft_fill_with_padding(char *res, int total_len, int precision, t_flags flags)
 		end = total_len - precision;
 		i = total_len - 1;
 	}
-	res = (char *) ft_memset(res + start, end - start + 1, flags.padding);
+	res = (char *) ft_memset(res + start, end - start, flags.padding);
 	return (i);
 }

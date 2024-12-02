@@ -11,6 +11,8 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
+bonus : all
+
 %.o : %.c
 	$(CC) $(FLAGS) -c $< -o $@
 

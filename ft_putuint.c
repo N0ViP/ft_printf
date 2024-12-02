@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:44:53 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/01 18:27:01 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 09:59:25 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static char	*ft_itoa_evo(unsigned int nb, int precision,
 	if (flags.width > precision)
 		i = ft_fill_with_padding(res, total_len, precision, flags);
 	else
-		i = precision;
+		i = precision - 1;
 	while (precision--)
 	{
-		res[i] = (nb % 10) + 48;
+		res[i--] = (nb % 10) + 48;
 		nb /= 10;
 	}
 	return (res);

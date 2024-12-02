@@ -6,23 +6,23 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:13:05 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/01 18:25:28 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 09:35:34 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_atoi(char *str)
+int	ft_atoi(char **str)
 {
 	int	res;
 
 	res = 0;
-	while (*str >= '0' && *str <= '9')
+	while (**str >= '0' && **str <= '9')
 	{
-		res = (res * 10) + (*str - '0');
+		res = (res * 10) + (**str - '0');
 		if (res < 0)
-			return (-1);
-		str++;
+			return (-2);
+		(*str)++;
 	}
 	return (res);
 }
