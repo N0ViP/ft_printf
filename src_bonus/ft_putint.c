@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 09:24:38 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/02 14:42:48 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 22:52:49 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	ft_check_sign(char *res, int nb, int i, t_flags flags)
 {
+	if (flags.padding == '0')
+		i = 0;
 	if (nb < 0)
 		res[i] = '-';
 	else
@@ -38,7 +40,7 @@ static char	*ft_itoa_evo(int nb, int total_len, int precision, t_flags flags)
 		return (NULL);
 	tmp_nb = nb;
 	if (flags.width > precision + sign)
-		i = ft_fill_with_padding(res, total_len, precision + sign, flags);
+		i = ft_fill_with_padding(res, total_len, precision, flags) + (sign * flags.left_justify);
 	else
 		i = precision - 1 + sign;
 	while (precision--)
