@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:09:38 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/02 09:49:54 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:43:40 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	ft_puthex(unsigned int nb, t_flags flags)
 	char	*res;
 
 	alternate = 2 * (flags.alternate_form && nb != 0);
-	precision = ft_max(ft_unsigned_hex_len(nb), flags.precision);
+	precision = ft_max(ft_unsigned_len(nb, 16), flags.precision);
+	if (nb == 0 && flags.precision == -1)
+		precision = 1;
 	total_len = ft_max((precision + alternate), flags.width);
 	if (flags.precision != -1 || flags.left_justify)
 		flags.padding = ' ';

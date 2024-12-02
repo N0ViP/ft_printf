@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 15:41:19 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/02 09:51:10 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:02:41 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ int		ft_putint(int nb, t_flags flags);
 int		ft_putchar(char c, t_flags flags);
 int		ft_printf(const char *format, ...);
 int		ft_putstr(char *str, t_flags flags);
-int		ft_unsigned_hex_len(unsigned int nb);
-int		ft_unsigned_int_len(unsigned int nb);
 void	*ft_memset(void *res, int len, char c);
 int		ft_unsigned_ll_len(unsigned long long nb);
 int		ft_puthex(unsigned int nb, t_flags flags);
+int		ft_unsigned_len(unsigned int nb, int base);
 int		ft_putuint(unsigned int nb, t_flags flags);
 int		ft_putptr(unsigned long long nb, t_flags flags);
 int		ft_fill_with_padding(char *res, int total_len,

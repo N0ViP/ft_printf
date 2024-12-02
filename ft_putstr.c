@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:00:37 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/01 18:27:55 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 15:02:54 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_putstr(char *str, t_flags flags)
 	if (!str)
 	{
 		if (flags.precision < 6 && flags.precision != -1)
-			return (-1);
+			str = "";
 		else
 			str = "(null)";
 	}

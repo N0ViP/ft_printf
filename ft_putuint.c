@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:44:53 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/02 09:59:25 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:27:23 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	ft_putuint(unsigned int nb, t_flags flags)
 	int		precision;
 	char	*res;
 
-	precision = ft_max(ft_unsigned_int_len(nb), flags.precision);
+	precision = ft_max(ft_unsigned_len(nb, 10), flags.precision);
+	if (nb == 0 && flags.precision == -1)
+		precision = 1;
 	total_len = ft_max(precision, flags.width);
 	if (flags.precision != -1 || flags.left_justify)
 		flags.padding = ' ';
