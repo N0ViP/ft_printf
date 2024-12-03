@@ -5,79 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 17:51:32 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/29 10:18:35 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/11/30 13:13:59 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/03 16:48:28 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_select_type(va_list args, char c)
+static void	ft_get_flags(char **format, t_flags *flags)
 {
-	int	count;
-
-	count = -2;
-	if (c == 'c')
-		count = ft_putchar(va_arg(args, int));
-	else if (c == 's')
-		count = ft_putstr(va_arg(args, char *));
-	else if (c == 'd' || c == 'i')
-		count = ft_putint(va_arg(args, int));
-	else if (c == 'u')
-		count = ft_putuint(va_arg(args, unsigned int));
-	else if (c == 'x' || c == 'X')
-		count = ft_puthex(va_arg(args, unsigned int), c);
-	else if (c == 'p')
-		count = ft_putptr((unsigned long long) va_arg(args, void *));
-	else if (c == '%')
+	while (ft_strchr("#+ -0", **format))
 	{
-		count = 1;
-		write(1, "%", 1);
+		if (**format == '#')
+			flags->alternate_form = 1;
+		else if (**format == '+')
+			flags->sign_flag = 1;
+		else if (**format == ' ')
+			flags->space_flag = 1;
+		else if (**format == '-')
+			flags->left_justify = 1;
+		else if (**format == '0')
+			flags->padding = '0';
+		(*format)++;
 	}
-	return (count);
 }
 
-int	ft_check_format(char **str, va_list args)
+static void	ft_get_width_precision(char **format, t_flags *flags)
 {
-	int	count;
-
-	count = -2;
-	if (ft_strchr("csiduxXp%", *(*str + 1)))
+	flags->width = ft_atoi(format);
+	if (**format == '.')
 	{
-		count = ft_select_type(args, *(*str + 1));
-		(*str)++;
+		(*format)++;
+		flags->precision = ft_atoi(format);
 	}
+	if ((flags->width == -2) || (flags->precision == -2))
+		*format = NULL;
+}
+
+static int	ft_get_flags_and_select_type(char **format, va_list args,
+	int *check_last_per)
+{
+	int		count;
+	t_flags	flags;
+
+	flags = (t_flags){0, 0, 0, 0, -1, 0, 'b', ' '};
+	ft_get_flags(format, &flags);
+	ft_get_width_precision(format, &flags);
+	if (!(*format) || (!(**format) && *check_last_per != 1))
+		return (-1);
+	if (ft_strchr("csiduxXp%", **format))
+		count = ft_select_type(**format, args, flags);
 	else
 	{
-		count = 1;
-		write(1, *str, 1);
+		count = ft_theres_no_type(flags);
+		*check_last_per = 1;
+		(*format)--;
 	}
 	return (count);
 }
 
-int	ft_printf(const char *str, ...)
+static int	ft_vprintf(char *format, va_list args)
+{
+	int	count;
+	int	i;
+	int	tmp;
+	int	check_last_per;
+
+	count = 0;
+	check_last_per = 0;
+	while (*format)
+	{
+		i = ft_check_percentage(format);
+		write(1, format, i);
+		count += i;
+		if (format[i] == '\0')
+			return (count);
+		format += i + 1;
+		tmp = ft_get_flags_and_select_type(&format, args, &check_last_per);
+		if (tmp == -1)
+			return (-1);
+		count += tmp;
+		format++;
+	}
+	return (count);
+}
+
+int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		count;
-	int		tmp;
 
-	count = 0;
-	tmp = 0;
-	va_start(args, str);
-	while (*str)
-	{
-		if (*str != '%')
-		{
-			tmp = 1;
-			write(1, str, 1);
-		}
-		else
-			tmp = ft_check_format((char **) &str, args);
-		if (tmp == -2)
-			return (-1);
-		count += tmp;
-		str++;
-	}
-	va_end(args);
-	return (count);
+	if (!format)
+		return (-1);
+	va_start(args, format);
+	count = ft_vprintf((char *) format, args);
+	return (va_end(args), count);
 }

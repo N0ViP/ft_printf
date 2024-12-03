@@ -5,55 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:10:34 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/29 08:53:07 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 09:24:38 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/03 00:48:59 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_numlen(int nb)
+static void	ft_check_sign(char *res, int nb, int i, t_flags flags)
 {
-	int	i;
-
-	i = 1;
-	while (nb / 10)
-	{
-		i++;
-		nb /= 10;
-	}
-	return (i);
-}
-
-static int	ft_abs(int nb)
-{
+	if (flags.padding == '0')
+		i = 0;
 	if (nb < 0)
-		nb *= -1;
-	return (nb);
+		res[i] = '-';
+	else
+	{
+		if (flags.sign_flag)
+			res[i] = '+';
+		else if (flags.space_flag)
+			res[i] = ' ';
+	}
 }
 
-int	ft_putint(int nb)
+static char	*ft_itoa_evo(int nb, int total_len, int precision, t_flags flags)
 {
-	int		num_len;
+	char	*res;
 	int		i;
 	int		sign;
+	int		tmp_nb;
+
+	sign = (nb < 0 || flags.sign_flag || flags.space_flag);
+	res = (char *) malloc(total_len);
+	if (!res)
+		return (NULL);
+	tmp_nb = nb;
+	if (flags.width > precision + sign)
+		i = ft_fill_with_padding(res, total_len, precision, flags)
+			+ (sign * flags.left_justify);
+	else
+		i = precision - 1 + sign;
+	while (precision--)
+	{
+		res[i--] = ft_abs(tmp_nb % 10) + 48;
+		tmp_nb /= 10;
+	}
+	ft_check_sign(res, nb, i, flags);
+	return (res);
+}
+
+int	ft_putint(int nb, t_flags flags)
+{
+	int		total_len;
+	int		sign;
+	int		precision;
 	char	*res;
 
-	sign = 0;
-	num_len = ft_numlen(nb);
-	if (nb < 0)
-		sign = 1;
-	res = (char *) malloc(num_len + sign);
+	sign = (nb < 0 || flags.sign_flag || flags.space_flag);
+	precision = ft_max(ft_numlen(nb), flags.precision);
+	if (nb == 0 && flags.precision == -1)
+		precision = 1;
+	total_len = ft_max((precision + sign), flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, total_len, precision, flags);
 	if (!res)
-		return (-2);
-	i = num_len + (sign);
-	while (i--)
-	{
-		res[i] = ft_abs(nb % 10) + '0';
-		nb /= 10;
-	}
-	if (sign)
-		res[0] = '-';
-	write(1, res, num_len + sign);
-	return (free(res), (num_len + sign));
+		return (-1);
+	write(1, res, total_len);
+	return (free(res), total_len);
 }

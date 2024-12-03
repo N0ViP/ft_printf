@@ -5,42 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:59:37 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/28 23:53:51 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 14:44:53 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/02 14:27:23 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_unumlen(unsigned int nb)
+static char	*ft_itoa_evo(unsigned int nb, int precision,
+	int total_len, t_flags flags)
 {
-	int	i;
-
-	i = 1;
-	while (nb / 10)
-	{
-		nb /= 10;
-		i++;
-	}
-	return (i);
-}
-
-int	ft_putuint(unsigned int nb)
-{
-	int		unum_len;
 	int		i;
 	char	*res;
 
-	unum_len = ft_unumlen(nb);
-	res = (char *) malloc(unum_len);
+	res = malloc(total_len);
 	if (!res)
-		return (-2);
-	i = unum_len;
-	while (i--)
+		return (NULL);
+	if (flags.width > precision)
+		i = ft_fill_with_padding(res, total_len, precision, flags);
+	else
+		i = precision - 1;
+	while (precision--)
 	{
-		res[i] = (nb % 10) + 48;
+		res[i--] = (nb % 10) + 48;
 		nb /= 10;
 	}
-	write(1, res, unum_len);
-	return (free(res), unum_len);
+	return (res);
+}
+
+int	ft_putuint(unsigned int nb, t_flags flags)
+{
+	int		total_len;
+	int		precision;
+	char	*res;
+
+	precision = ft_max(ft_unsigned_len(nb, 10), flags.precision);
+	if (nb == 0 && flags.precision == -1)
+		precision = 1;
+	total_len = ft_max(precision, flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, precision, total_len, flags);
+	if (!res)
+		return (-1);
+	write(1, res, total_len);
+	return (free(res), total_len);
 }

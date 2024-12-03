@@ -5,51 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:32:39 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/11/29 09:00:54 by yjaafar          ###   ########.fr       */
+/*   Created: 2024/12/01 15:09:38 by yjaafar           #+#    #+#             */
+/*   Updated: 2024/12/02 14:43:40 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_hexlen(unsigned int nb)
+static void	ft_get_alternate_form(char *res, int i, t_flags flags)
 {
-	int	i;
+	if (flags.base == 'x')
+		res[i--] = 'x';
+	else
+		res[i--] = 'X';
+	res[i] = '0';
+}
 
-	i = 1;
-	while (nb / 16)
+static char	*ft_itoa_evo(unsigned int nb, int total_len,
+	int precision, t_flags flags)
+{
+	char	*res;
+	char	*base;
+	int		alternate;
+	int		i;
+
+	res = (char *) malloc(total_len);
+	if (!res)
+		return (NULL);
+	if (flags.base == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	alternate = 2 * (flags.alternate_form && nb != 0);
+	if (flags.width > precision + alternate)
+		i = ft_fill_with_padding(res, total_len, precision + alternate, flags);
+	else
+		i = precision - 1 + alternate;
+	while (precision--)
 	{
-		i++;
+		res[i--] = base[nb % 16];
 		nb /= 16;
 	}
-	return (i);
+	if (alternate)
+		ft_get_alternate_form(res, i, flags);
+	return (res);
 }
 
-static char	*ft_select_base(char c)
+int	ft_puthex(unsigned int nb, t_flags flags)
 {
-	if (c == 'x')
-		return ("0123456789abcdef");
-	return ("0123456789ABCDEF");
-}
-
-int	ft_puthex(unsigned int nb, char c)
-{
-	int		hex_len;
-	int		i;
-	char	*base;
+	int		total_len;
+	int		precision;
+	int		alternate;
 	char	*res;
 
-	hex_len = ft_hexlen(nb);
-	base = ft_select_base(c);
-	i = hex_len;
-	res = (char *) malloc(hex_len);
+	alternate = 2 * (flags.alternate_form && nb != 0);
+	precision = ft_max(ft_unsigned_len(nb, 16), flags.precision);
+	if (nb == 0 && flags.precision == -1)
+		precision = 1;
+	total_len = ft_max((precision + alternate), flags.width);
+	if (flags.precision != -1 || flags.left_justify)
+		flags.padding = ' ';
+	res = ft_itoa_evo(nb, total_len, precision, flags);
 	if (!res)
-		return (-2);
-	while (i--)
-	{
-		res[i] = base[nb % 16];
-		nb /= 16;
-	}
-	write(1, res, hex_len);
-	return (free(res), hex_len);
+		return (-1);
+	write(1, res, total_len);
+	return (free(res), total_len);
 }
