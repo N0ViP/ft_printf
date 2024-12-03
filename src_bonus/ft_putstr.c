@@ -6,7 +6,7 @@
 /*   By: yjaafar <yjaafar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:00:37 by yjaafar           #+#    #+#             */
-/*   Updated: 2024/12/03 00:50:14 by yjaafar          ###   ########.fr       */
+/*   Updated: 2024/12/03 10:42:31 by yjaafar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,12 @@ int	ft_putstr(char *str, t_flags flags)
 			str = "(null)";
 	}
 	str_len = ft_strlen(str);
-	if (flags.precision <= str_len && flags.precision != -1)
-	{
+	if (flags.precision < str_len && flags.precision != -1)
 		str_len = flags.precision;
-		if (flags.width <= str_len)
-		{
-			write(1, str, str_len);
-			return (str_len);
-		}
+	if (flags.width <= str_len)
+	{
+		write(1, str, str_len);
+		return (str_len);
 	}
 	res = (char *) malloc(flags.width);
 	if (!res)
